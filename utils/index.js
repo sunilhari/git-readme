@@ -17,12 +17,10 @@ export function useDebounce(value, delay) {
 
  return debouncedValue;
 }
-
 export function useGithubRepos(query) {
  const [data, setData] = useState([]);
  const [loading, setLoading] = useState(false);
  useEffect(() => {
-  //113da56fe4c392631ad403fe31ee65c87987a930
   let cancelCall = false;
   const url = `https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc&per_page=5`;
   async function fetchData() {
@@ -30,7 +28,7 @@ export function useGithubRepos(query) {
    const { data } = await axios({
     url,
     headers: {
-     authorization: "token 113da56fe4c392631ad403fe31ee65c87987a930"
+     authorization: `token ${process.env.gitToken}`
     }
    });
    if (cancelCall) {
@@ -57,7 +55,7 @@ export function usePackageReadme(repoName) {
    const { data } = await axios({
     url,
     headers: {
-     authorization: "token 113da56fe4c392631ad403fe31ee65c87987a930"
+     authorization: `token ${process.env.gitToken}`
     }
    });
    if (cancelCall) {
