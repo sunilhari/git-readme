@@ -1,20 +1,10 @@
 {
  "version": 2,
- "name": "git-readme",
  "build": {
   "env": {
-   "gitToken": "@github_token"
+   "githubToken": "@github_token"
   }
  },
- "builds": [
-  {
-   "src": "package.json",
-   "use": "@now/static-build",
-   "config": {
-    "distDir": "build"
-   }
-  }
- ],
  "routes": [
   {
    "src": "^/static/(.*)",

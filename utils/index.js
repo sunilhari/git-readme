@@ -22,15 +22,9 @@ export function useGithubRepos(query) {
  const [loading, setLoading] = useState(false);
  useEffect(() => {
   let cancelCall = false;
-  const url = `https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc&per_page=5`;
   async function fetchData() {
    setLoading(true);
-   const { data } = await axios({
-    url,
-    headers: {
-     authorization: `token ${process.env.gitToken}`
-    }
-   });
+   const { data } = await axios(`api/query/${query}`);
    if (cancelCall) {
     return;
    }
@@ -49,15 +43,9 @@ export function usePackageReadme(repoName) {
  const [loading, setLoading] = useState(false);
  useEffect(() => {
   let cancelCall = false;
-  const url = `https://api.github.com/repos/${repoName}/contents/README.md`;
   async function fetchData() {
    setLoading(true);
-   const { data } = await axios({
-    url,
-    headers: {
-     authorization: `token ${process.env.gitToken}`
-    }
-   });
+   const { data } = await axios(`api/package/${repoName}`);
    if (cancelCall) {
     return;
    }
@@ -69,6 +57,5 @@ export function usePackageReadme(repoName) {
    cancelCall = true;
   };
  }, [repoName]);
- console.log(response);
  return [loading, response];
 }

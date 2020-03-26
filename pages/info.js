@@ -8,7 +8,6 @@ import { usePackageReadme } from "../utils";
 function Info() {
  const router = useRouter();
  const [loading, readme] = usePackageReadme(router.query.package);
- console.log("readme", readme);
  const content = readme ? Buffer.from(readme.content, "base64").toString() : "";
  return (
   <div className="container">
@@ -26,9 +25,18 @@ function Info() {
      width: 100%;
      flex: 0 1 auto;
     }
+    .is-loading,
     main {
      width: 100%;
      flex: 1 1 auto;
+    }
+    .is-loading {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+    }
+    .is-loading .loading {
+     font-size: 1.5em;
     }
     .home-link {
      text-decoration: none;
@@ -1051,9 +1059,15 @@ function Info() {
      </a>
     </Link>
    </header>
-   <main className="markdown-body">
-    <ReactMarkdown source={content} skipHtml={true} />
-   </main>
+   {loading ? (
+    <main className="is-loading">
+     <span className="loading">Loading ...</span>
+    </main>
+   ) : (
+    <main className="markdown-body">
+     <ReactMarkdown source={content} skipHtml={true} />
+    </main>
+   )}
    <style jsx global>{`
     html,
     body {
